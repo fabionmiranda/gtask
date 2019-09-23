@@ -1,0 +1,91 @@
+<h1 class="text-center">Gerenciador Tarefas - Listagem</h1>
+<br>
+<hr/>
+
+
+    <p-table [value]="tarefas" [paginator]="true" [rows]="10" [responsive]="true"
+    #dt [globalFilterFields]="['nome']">
+      <!-- PESQUISA CAMPO DESCRIÇÃO DA TAREFA - NOME -->
+      <ng-template pTemplate="caption">
+          <div>
+            <i class="fa fa-search icone-lupa"></i>
+            <input type="text" pInputText size="50" placeholder="Digite as iniciais do nome da tarefa..."
+              (input)="dt.filterGlobal($event.target.value, 'contains')"/>
+          </div>
+        </ng-template>
+
+      
+        <!-- HEADER -->
+        <ng-template pTemplate="header">
+            <tr>                   
+
+                <th *ngFor="let col of colunas" [pSortableColumn]="col.field" class="text-center" >
+                  {{ col.header }} <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>        
+                <!-- <th class="text-center">Ações</th>  -->
+             
+                <th class="text-center">
+                    <a [routerLink]="['/tarefas/cadastrar']"
+                      class="btn btn-xs btn-dark">
+                      <span class="glyphicon glyphicon-plus" 
+                        aria-hidden="true"></span> Nova tarefa
+                    </a>
+                </th>
+              
+            </tr>
+
+        
+          </ng-template>
+
+          <!-- BODY-->
+          <ng-template pTemplate="body" let-tarefas>
+            <tr>
+              <td *ngFor="let col of colunas" class="text-center">
+                  <div>
+                      <span *ngIf="col.field == 'dataCriacao'">
+                        {{ tarefas[col.field] | date: "dd/MM/yyyy" }}
+                      </span>
+                      <span *ngIf="col.field != 'dataCriacao'">
+                        {{ tarefas[col.field] }}
+                      </span>       
+                      
+                      <span *ngIf="col.field == 'concluida'">   
+                        <div>
+                          <input type="radio" id="opcaoSim" name="conclusao" [value]=true for="opcaoSim" (change)="verificarConclusao($event)"> Sim            
+                          <input type="radio" id="opcaoNao" name="conclusao" [value]=false for="opacaoNao" (change)="verificarConclusao($event)"> Não
+                        </div> 
+                      
+                      </span>       
+                      
+                      
+                  </div>
+              </td>
+              
+              <td class="col-sm-1 text-center">
+                  
+                    <button type="button" data-toggle="tooltip" title="editar tarefa" (click)="routeEditarTarefa(tarefas.id)" >
+                      <i class="fa fa-edit"></i>
+                    </button>
+                    &nbsp;
+                    <button type="button" data-toggle="tooltip" title="excluir tarefa" (click)="remover($event, tarefas)">
+                        <i class="fa fa-trash"></i>
+                      </button>
+              </td>
+              
+              
+              
+            </tr>            
+          </ng-template>
+
+          <!-- paginacao-->
+          <ng-template pTemplate="paginatorleft" let-state>
+              <label>Total de registros: {{ totalResultados }}</label>
+            </ng-template>
+
+            <p *ngIf="tarefas.length == 0">Nenhuma tarefa cadastrada.</p>
+    </p-table>
+
+    
+    
+    <h6 class="text-center">Copyright - Fabio N. Miranda - fabioNmiranda@gmail.com</h6>
+    

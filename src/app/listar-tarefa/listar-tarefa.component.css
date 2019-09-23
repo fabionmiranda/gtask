@@ -1,0 +1,21 @@
+.label-total-registros {
+    margin-top: 7px;
+    font-size: 13px;
+}
+
+hr {
+    height: 3px;
+    border: none;
+    color: lightgrey;
+    background-color: lightslategrey;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.icone-lupa {
+    margin: 4px 4px 0 0;
+}
+
+.barra-consulta {
+    text-align: left;
+}

@@ -1,0 +1,94 @@
+<h1>Cadastrar tarefa</h1>
+
+<div class="well">
+  <form #formTarefa="ngForm">
+    
+    <div class="form-group">      
+
+      <label for="dataCriacao">Data:</label>
+      <input 
+        type="date"
+        class="form-control"
+        id="dataCriacao"
+        name="dataCriacao"
+        [(ngModel)]="tarefa.dataCriacao"
+        #nome="ngModel"        
+        required> 
+
+
+      <!-- input do nome da tarefa -->
+      <label for="nome">Tarefa:</label>
+      <input 
+        type="text"
+        class="form-control"
+        id="nome"
+        name="nome"
+        [(ngModel)]="tarefa.nome"
+        #nome="ngModel"
+        minlength="5" 
+        required> 
+
+
+
+             <!-- verificação de erros no campo NOME -->
+      <div *ngIf="nome.hasError('required') && (nome.dirty || nome.touched)" class="alert alert-danger">        
+          <div [hidden]="!nome.hasError('required')">
+            Digite a tarefa.
+          </div>
+          <div [hidden]="!nome.hasError('required').minlength">
+            A tarefa deve conter ao menos 5 caracteres.
+          </div>
+        </div>
+
+      <!-- input da prioridade da tarefa -->
+        <label for="prioridade">Prioridade:</label>
+        <!--
+        <input 
+          type="number"
+          class="form-control"
+          id="prioridade"
+          name="prioridade"
+          [(ngModel)]="tarefa.prioridade"
+          #prioridade="ngModel"
+          minlength="1"
+          maxlength="1"
+          placeholder="A tarefa deve ser de 1 a 5 (1 a mais baixa e 5 a mais alta)."
+          required> 
+
+          -->
+
+            <!-- SELECTION -->
+            <select
+            class="form-control"
+            id="prioridade"
+            name="prioridade"
+            [(ngModel)]="tarefa.prioridade"
+            #nome="ngModel"
+            minlength="1" 
+            placeholder="A tarefa deve ser de 1 a 5 (1 a mais baixa e 5 a mais alta)."
+            required>
+            <option value="1"> 1 </option>
+            <option value="2"> 2 </option>
+            <option value="3"> 3 </option>
+            <option value="4"> 4 </option>
+            <option value="5"> 5 </option>        
+          </select>
+
+      </div>
+
+    <!-- botao cadastrar -->
+    <div class="form-group text-center">
+      <input 
+        type="submit"
+        class="btn btn-success"
+        (click)="cadastrar()"
+        value="Cadastrar"
+        [disabled]="!formTarefa.form.valid">
+      <a [routerLink]="['/tarefas']"
+        class="btn btn-default">
+        <span class="glyphicon glyphicon-chevron-left" 
+          aria-hidden="true"></span> Voltar
+      </a>
+    </div>
+  </form>
+</div>
